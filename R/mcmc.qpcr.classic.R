@@ -1,6 +1,5 @@
 mcmc.qpcr.classic <-
 function(fixed,random=NULL,data,controls,genebysample=T,center=T,...) {
-	require(MCMCglmm)
 	ngenes=length(levels(data[,"gene"]))
 
 #checking if there are technical reps

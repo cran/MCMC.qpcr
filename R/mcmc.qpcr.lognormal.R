@@ -1,6 +1,5 @@
 mcmc.qpcr.lognormal <-
 function(fixed,random=NULL,data,controls=NULL,include=NULL,m.fix=1.2,v.fix=NULL,genebysample=T,vprior="flat",...) {
-	require(MCMCglmm)
 	ngenes=length(levels(data[,"gene"]))
 	if(vprior=="flat") { 
 		vstr.g1=list(V=1, nu=0)

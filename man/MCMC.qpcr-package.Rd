@@ -23,14 +23,16 @@ multigene normalization is implemented (function mcmc.qpcr.classic).
 The package includes several functions for plotting the results and calculating statistical
 significance (HPDplot, HPDplotBygene, HPDplotBygeneBygroup).
 
+The detailed step-by-step tutorial is here:
+http://www.bio.utexas.edu/research/matz_lab/matzlab/Methods_files/mcmc.qpcr.tutorial.release1.pdf
 }
 \details{
 \tabular{ll}{
 Package: mcmc.qpcr\cr
 Type: Package\cr
-Version: 1.0\cr
-Date: 2013-07-04\cr
-License: GPL-2\cr
+Version: 1.0.1\cr
+Date: 2013-07-23\cr
+License: GPL-3\cr
 }
 }
 \author{

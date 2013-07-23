@@ -41,7 +41,13 @@ Symbols to use for different groups (see ?par -> pch).
 Jitter distance between groups.
 }
   \item{yscale}{
-For qPCR analysis, the default 'log2' should be used. Other options are 'log10', 'proportion' (assumes that arcsin-suqare root transformation was used and plots the results on the original scale), and 'absolute' (no data transformation for plotting).  
+Scale on which to represent the data. In all mcmc.qpcr models the model scale is natural logarithm, which
+I prefer to translate into log2 or log10 (if the differences are orders of magnitude) for better human readability. 
+The default is 'log2'; other options are 'log10' and 'native' (no rescaling of the model data). 
+There is also a beta-option 'proportion', which is not useful for qPCR. It was added to cannibalize HPDplotBygene 
+function for plotting results of the model operating with arcsin-square root
+transfromed proportions. With yscale="proportions", the plot will be on the original proportion scale but the tukey-like 
+differences will still be reported on the asin(sqrt()) transformed scale.
 }
   \item{\dots}{
 additional parameters for HPDplotBygene() function, such as pval (see HPDplotBygene() help)

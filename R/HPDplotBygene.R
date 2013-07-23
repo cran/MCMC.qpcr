@@ -6,6 +6,18 @@ function(model,gene,conditions,pval="mcmc",newplot=T,ylimits=NULL,inverse=F,jitt
 	names1=names2=c()
 	allnames=names(posterior.mode(model$Sol))
 	intercept=paste('gene',gene,sep="")	
+
+	if (yscale=="log2") {
+		model$Sol=model$Sol/log(2)
+		Ylab="log2(abundance)"
+	} else {
+		if (yscale=="log10") {
+			model$Sol=model$Sol/log(10)
+			Ylab="log10(abundance)"
+		}	else {
+				Ylab="ln(abundance)" 
+		}
+	}
 	
 	cstats=c();means=c();hpds=c();pz=c()
 	for (c in 1:length(names(conditions))) {
@@ -38,24 +50,12 @@ function(model,gene,conditions,pval="mcmc",newplot=T,ylimits=NULL,inverse=F,jitt
 		row.names(hpds)=paste(row.names(hpds),co)
 		ress=data.frame(cbind("mean"=means,"lo"=hpds[,1],"up"=hpds[,2]),deparse.level=0)
 #print(ress)
-		if (yscale=="log2") {
-			ress=ress/log(2)
-			Ylab="log2(abundance)"
-		} else {
-			if (yscale=="log10") {
-				ress=ress/log(10)
-				Ylab="log10(abundance)"
-			}	else {
-				if (yscale=="proportion") {
-					ress[ress<0]=0
-					ress=sin(ress)^2
-					Ylab="proportion" 
-				} else { 
-					Ylab="abundance" 
-				}
-			}
+		if (yscale=="proportion") {
+			ress[ress<0]=0
+			ress=sin(ress)^2
+			Ylab="proportion" 
 		}
-			
+		
 #		sds=append(sds,sd(stat))
 		cstats=cbind(cstats,stat,deparse.level=0)
 		names(cstats)[c]=co

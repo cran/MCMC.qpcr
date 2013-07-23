@@ -1,6 +1,6 @@
 HPDplotBygeneBygroup = function(model,gene,group1,group2,group3=NULL,interval="ci",colors=c("coral","cyan3","grey50"),symbols=c(19,17,15),jitter=0.16,yscale="log2",...) {
-	a=HPDplotBygene(model,gene,conditions=group1,interval=interval,plot=F,...)
-	b=HPDplotBygene(model,gene,conditions=group2,interval=interval,plot=F,...)
+	a=HPDplotBygene(model,gene,conditions=group1,interval=interval,plot=F,yscale=yscale,...)
+	b=HPDplotBygene(model,gene,conditions=group2,interval=interval,plot=F,yscale=yscale,...)
 	lims=c(a$min,a$max,b$min,b$max)
 	jit=c(0-jitter/2,0+jitter/2)
 	if (is.null(group3)==FALSE) {
@@ -10,13 +10,9 @@ HPDplotBygeneBygroup = function(model,gene,group1,group2,group3=NULL,interval="c
 	}
 marg=0.25
 if (yscale=="proportion") {
-	lims=sin(lims)^2
+#	lims=sin(lims)^2
 	marg=0.02
 }
-
-# print(a)
-# print(b)
-# print(lims)
 
 g1= HPDplotBygene(model,gene,conditions=group1,interval=interval,jitter=jit[1],pch=symbols[1],col=colors[1],ylimits=c(min(lims)-marg,max(lims)+marg),main=gene,yscale=yscale,...)
 g2= HPDplotBygene(model,gene,conditions=group2,interval=interval,jitter=jit[2],pch=symbols[2],col=colors[2],newplot=F,yscale=yscale,...)
