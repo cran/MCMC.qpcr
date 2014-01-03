@@ -46,7 +46,7 @@ The models that process cq2log output are expected to work well for datasets tha
 Returns a dataframe with a single response variable column ("count", even though it is actually a log-transformed relative abundance value), gene column ("gene") and several columns containing factors.
 }
 \references{
-pending
+Matz MV, Wright RM, Scott JG (2013) No Control Genes Required: Bayesian Analysis of qRT-PCR Data. PLoS ONE 8(8): e71448. doi:10.1371/journal.pone.0071448
 }
 \author{
 Mikhail V. Matz, UT Austin

@@ -25,7 +25,7 @@ Whether to perform centering around mean or not.
 normalized dataset
 }
 \references{
-pending
+Matz MV, Wright RM, Scott JG (2013) No Control Genes Required: Bayesian Analysis of qRT-PCR Data. PLoS ONE 8(8): e71448. doi:10.1371/journal.pone.0071448
 }
 \author{
 Mikhail Matz, UT Austin

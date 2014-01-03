@@ -57,7 +57,7 @@ additional parameters for HPDplotBygene() function, such as pval (see HPDplotByg
 Generates a point-whiskers plot, lists pairwise mean differenes between all conditions, calculates and lists pairwise p-values (not corrected for multiple testing). 
 }
 \references{
-pending
+Matz MV, Wright RM, Scott JG (2013) No Control Genes Required: Bayesian Analysis of qRT-PCR Data. PLoS ONE 8(8): e71448. doi:10.1371/journal.pone.0071448
 }
 \author{
 Mikhal V. Matz, UT Austin

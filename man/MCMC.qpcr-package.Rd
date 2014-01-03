@@ -40,7 +40,7 @@ Mikhail V. Matz, University of Texas at Austin
 <matz@utexas.edu>
 }
 \references{
-Matz, M. V., Wright, R. M., and Scott, J. G. No control genes required: Bayesian analysis of qRT-PCR data. PLoS ONE 2013
+Matz MV, Wright RM, Scott JG (2013) No Control Genes Required: Bayesian Analysis of qRT-PCR Data. PLoS ONE 8(8): e71448. doi:10.1371/journal.pone.0071448
 }
 \keyword{ package }
 \examples{

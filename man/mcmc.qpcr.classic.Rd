@@ -46,7 +46,7 @@ This function requires data prepared by cq2log function and must have the contro
 An MCMCglmm object. See mcmc.qpcr function for details and examples.
 }
 \references{
-pending
+Matz MV, Wright RM, Scott JG (2013) No Control Genes Required: Bayesian Analysis of qRT-PCR Data. PLoS ONE 8(8): e71448. doi:10.1371/journal.pone.0071448
 }
 \author{
 Mikhail V. Matz, University of Texas at Austin

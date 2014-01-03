@@ -96,7 +96,7 @@ For more useful operations on MCMCglmm objects, such as posterior.mode(), HPDint
 and plot(), see documentation for MCMCglmm package.
 }
 \references{
-pending
+Matz MV, Wright RM, Scott JG (2013) No Control Genes Required: Bayesian Analysis of qRT-PCR Data. PLoS ONE 8(8): e71448. doi:10.1371/journal.pone.0071448
 }
 \author{
 Mikhail V. Matz, University of Texas at Austin

@@ -1,36 +1,37 @@
-\name{diagnostic.mcmc}
-\alias{diagnostic.mcmc}
+\name{outlierSamples}
+\alias{outlierSamples}
 %- Also NEED an '\alias' for EACH other topic documented here.
 \title{
-Plots three diagnostic plots to check the validity of the assumptions of linear model analysis.
+detects outlier samples in qPCR data 
 }
 \description{
-Predicted vs observed plot tests for linearity, Scale-location plot tests for homoscedasticity, and Normal QQ plot tests for normality of the residuals.
-} 
-\usage{
-diagnostic.mcmc(model, ...)
+reports samples that have too little starting material relative to others (by default, less by two standard deviations) 
 }
-%- maybe also 'usage' for other objects documented here.
+\usage{
+outlierSamples(model, data, z.cutoff = -2)
+}
 \arguments{
   \item{model}{
-MCMCglmm object (a model fitted by mcmc.qpcr or mcmc.qpcr.gauss), obtained with additional options, 'pl=T, pr=T'
+qPCR model: the output of mcmc.qpcr or mcmc.qpcr.lognormal function fitted with pr=TRUE option 
 }
-  \item{\dots}{
-Various plot() options to modify color, shape and size of the plotteed points.
+  \item{data}{
+The dataset that was analysed to generate the model (output of cq2counts or cq2log functions)
+}
+  \item{z.cutoff}{
+z-score cutoff to report an outlier sample.
 }
 }
 \value{
-A plot with three panels.	
+A vector containing outlier sample names. 
 }
 \references{
 Matz MV, Wright RM, Scott JG (2013) No Control Genes Required: Bayesian Analysis of qRT-PCR Data. PLoS ONE 8(8): e71448. doi:10.1371/journal.pone.0071448
 }
 \author{
-Mikhail V. Matz, UT Austin
+Mikhail V. Matz, University of Texas at Austin
 <matz@utexas.edu>
 }
 \examples{
-
 # loading Cq data and amplification efficiencies
 data(coral.stress) 
 data(amp.eff) 
@@ -49,9 +50,14 @@ mm=mcmc.qpcr(
 	fixed="condition",
 	data=dd,
 	controls=c("nd5","rpl11"),
-	pr=TRUE,pl=TRUE, # these flags are necessary for diagnostics
-	nitt=4000 # remove this line when analyzing real data!
+	nitt=4000, # remove this line when analyzing real data!
+	pr=TRUE
 )
-diagnostic.mcmc(mm)
+
+# detecting outliers
+outliers=outlierSamples(mm,dd)
+
+# removing outliers
+dd=dd[!(dd$sample \%in\% outliers),]
 
 }
