@@ -22,7 +22,7 @@ A second vector of variance component names. If it is specified, the function wi
 variance attributable to the sum of these components relative to total variance ('factors2' plus 'factors')
 }
   \item{hpdtype}{
-Specify hpdtype="l" to plot the upper and lower 95\% confidence limits as a continuous
+Specify hpdtype="l" to plot the upper and lower 95\% credible limits as a continuous
 dashed line across all genes. This is useful to evaluate the overall pattern of gene 
 expression change. By default (hpdtype="w") the limits are plotted as whiskers around
 each point.

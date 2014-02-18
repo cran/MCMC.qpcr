@@ -4,7 +4,7 @@
 Plots qPCR analysis results for individual genes.
 }
 \description{
-For a particular gene, plots model-predicted values (and confidence intervals) for a series of specified  fixed effect combinations ("conditions").
+For a particular gene, plots model-predicted values (and credible intervals) for a series of specified  fixed effect combinations ("conditions").
 }
 \usage{
 HPDplotBygene(model, gene, conditions, pval = "mcmc", newplot = T, 
@@ -52,7 +52,7 @@ transfromed proportions. With yscale="proportions", the plot will be on the orig
 differences will still be reported on the asin(sqrt()) transformed scale.
 }
   \item{interval}{
-'ci' (default) will plot 95\% confidence limits of the posterior distribution, 'sd' will plot the mean plus/minus one standard deviation of the posterior.
+'ci' (default) will plot 95\% credible limits of the posterior distribution, 'sd' will plot the mean plus/minus one standard deviation of the posterior.
 }
   \item{grid}{
 When TRUE, a vertical grid separating conditions will be added

@@ -5,7 +5,7 @@
 HPDplot, HPDpoints
 }
 \description{
-Calculates and plots posterior means with 95\% confidence intervals for specified 
+Calculates and plots posterior means with 95\% credible intervals for specified 
 fixed effects (or their combination) for all genes. HPDpoints only adds graphs to an existing plot.
 }
 \usage{
@@ -27,7 +27,7 @@ A second vector of fixed effect names to be subtracted from the first; see detai
 Y-limits for the plot such as c(-3,6); autoscale by default.
 }
   \item{hpdtype}{
-Specify hpdtype="l" to plot the upper and lower 95\% confidence limits as a continuous
+Specify hpdtype="l" to plot the upper and lower 95\% credible limits as a continuous
 dashed line across all genes. By default (hpdtype="w") the limits are plotted as whiskers around
 each point.
 }

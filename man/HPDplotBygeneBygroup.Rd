@@ -29,7 +29,7 @@ Combination of factors defining the second group.
 (optional) Combination of factors defining the third group.
 }
   \item{interval}{
-'ci' (default) will plot 95\% confidence limits of the posterior distribution, 'sd' will plot the mean plus/minus one standard deviation of the posterior.
+'ci' (default) will plot 95\% credible limits of the posterior distribution, 'sd' will plot the mean plus/minus one standard deviation of the posterior.
 }
   \item{colors}{
 Colors to use for different groups (see ?par -> col).

@@ -5,7 +5,7 @@ Determines qPCR amplification efficiencies from dilution series
 }
 \description{
 Runs linear regression on Cq versus log2(RNA concentration), plots graph,
-reports slope (ideally should be -1), and efficiency (with 95 percent confidence 
+reports slope (ideally should be -1), and efficiency (with 95 percent credible 
 limits)
 }
 \usage{

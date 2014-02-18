@@ -5,7 +5,7 @@
 Plotting fixed effects for all genes for a single combination of factors
 }
 \description{
-Calculates and plots posterior means with 95\% confidence intervals for specified 
+Calculates and plots posterior means with 95\% credible intervals for specified 
 fixed effects (or their combination) for all genes
 }
 \usage{
@@ -27,8 +27,8 @@ A second vector of fixed effect names to be subtracted from the first; see detai
 Y-limits for the plot such as c(-3,6); autoscale by default.
 }
   \item{hpdtype}{
-Specify hpdtype="l" to plot the upper and lower 95\% confidence limits as a continuous
-dashed line across all genes. This is useful to compare confidence intervals among several models on the same plot. 
+Specify hpdtype="l" to plot the upper and lower 95\% credible limits as a continuous
+dashed line across all genes. This is useful to compare credible intervals among several models on the same plot. 
 By default (hpdtype="w") the limits are plotted as whiskers around each point.
 }
   \item{inverse}{
@@ -42,7 +42,7 @@ HPDpoints to add to existing plot)
 }
   \item{plot}{
 if plot = FALSE the function returns a table of calculated posterior modes, means, upper 
-and lower 95\% confidence limits (all on log(2) scale), and two types of p-values: derived from Bayesian z-scores, 
+and lower 95\% credible limits (all on log(2) scale), and two types of p-values: derived from Bayesian z-scores, 
 and derived directly from MCMC sample. 
 
 All such outputs for a given experiment should be concatenated
@@ -77,7 +77,7 @@ gene2:conditionheat:timepointtwo
 
 If a vector of several fixed effect names is given, for example: 
 factors=c("timepointtwo","treatmentheat:timepointtwo")
-the function will plot the posterior mean and confidence interval for the sum of these 
+the function will plot the posterior mean and credible interval for the sum of these 
 effects.
 
 If a second vector is also given, for example,\cr 

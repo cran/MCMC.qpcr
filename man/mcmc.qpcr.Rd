@@ -84,9 +84,9 @@ All control genes share the same m.fix and v.fix parameters.
 \value{
 An MCMCglmm object. It contains all the results
 of MCMC sampling during model fitting. If the object is named, for example, mm, use summary(mm) to see means, 
-95\% confidence intervals, and Bayesian p-values of all fixed effects, and how variance partitions 
+95\% credible intervals, and Bayesian p-values of all fixed effects, and how variance partitions 
 between random effects and residuals. 
-Note that the effects and confidence intervals in the 
+Note that the effects and credible intervals in the 
 summary will be expressed as a natural logarithm of fold change; divide them by log(2) 
 to convert to logarithm with the base 2 (at least for me, qPCR results are easier to understand on the log2 scale, since such values are like PCR cycles). 
 
@@ -104,49 +104,36 @@ Mikhail V. Matz, University of Texas at Austin
 }
 \examples{
 
-# here is the whole analysis using part of the coral stress dataset
-# (use MCMC.qpcr tutorial for more extended examples)
+data(beckham.data)
+data(beckham.eff)
 
-# loading Cq data and amplification efficiencies
-data(coral.stress) 
-data(amp.eff) 
-# extracting a subset of data 
-cs.short=subset(coral.stress, timepoint=="one")
+# analysing the first 5 genes 
+# (to try it with all 10 genes, change the line below to gcol=4:13)
+gcol=4:8 
+ccol=1:3 # columns containing experimental conditions
 
-genecolumns=c(5,6,16,17) # specifying columns corresponding to genes of interest
-conditions=c(1:4) # specifying columns containing factors  
+# recalculating into molecule counts, reformatting
+qs=cq2counts(data=beckham.data,genecols=gcol,
+condcols=ccol,effic=beckham.eff,Cq1=37)
 
-# calculating molecule counts and reformatting:
-dd=cq2counts(data=cs.short,genecols=genecolumns,
-condcols=conditions,effic=amp.eff,Cq1=37) 
+# creating a single factor, 'treatment.time', out of 'tr' and 'time'
+qs$treatment.time=as.factor(paste(qs$tr,qs$time,sep="."))
 
-# fitting the model
-mm=mcmc.qpcr(
-	fixed="condition",
-	data=dd,
-	controls=c("nd5","rpl11"),
-	nitt=4000 # remove this line when analyzing real data!
+# fitting a naive model
+naive=mcmc.qpcr(
+	fixed="treatment.time",
+	data=qs,
+	nitt=4000 # remove this line in actual analysis!
 )
 
-# plotting log2(fold change) in response to heat stress for all genes
-HPDplot(model=mm,factors="conditionheat",main="response to heat stress")
+#summary plot of inferred abundances
+#s1=HPDsummary(model=naive,data=qs)
 
-# plotting abundances of individual genes across all conditions
-# step 1: defining conditions
-cds=list(
-  control=list(factors=0), # gene-specific intercept
-  stress=list(factors=c(0,"conditionheat")) # multiple effects will be summed up
-  )
+#summary plot of fold-changes relative to the global control
+s0=HPDsummary(model=naive,data=qs,relative=TRUE)
 
-# step 2: plotting gene after gene on the same panel
-HPDplotBygene(model=mm,gene="actin",conditions=cds,col="cyan3",
-pch=17,jitter=-0.1,ylim=c(-3.5,15),pval="z")
-HPDplotBygene(model=mm,gene="hsp16",conditions=cds,
-newplot=FALSE,col="coral",pch=19,jitter=0.1,pval="z")
-
-# step 3: adding legend
-legend(0.5,10,"actin",lty=1,col="cyan3",pch=17,bty="n")
-legend(0.5,7,"hsp16",lty=1,col="coral",pch=19,bty="n")
+# pairwise differences and their significances for each gene:
+s0$geneWise
 
 }
 
