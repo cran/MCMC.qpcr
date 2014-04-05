@@ -11,7 +11,7 @@ with more plotting options
 }
 \usage{
 summaryPlot(data, xgroup, facet = NA, type = "bar", x.order = NA, 
-whiskers = "ci", genes = NA)
+whiskers = "ci", genes = NA, log.base=2)
 }
 \arguments{
   \item{data}{
@@ -30,8 +30,7 @@ Two types are supported: "bar" and "line" ("line" also has points).
 is run with the option 'relative=TRUE'. "line" is better for plotting 
 actual inferred transcript abundances across factor levels; it is particularly 
 good for time courses and other cases when multiple factor levels must be 
-compared to each other (rather than comparing all of them against a single 
-global control). "bar" is good to plot log(fold-changes) relative to 
+compared to each other. "bar" is good to plot log(fold-changes) relative to 
 global control.  
 }
   \item{x.order}{
@@ -44,6 +43,9 @@ interval; another option is "sd" - standard deviation of the posterior.
 }
   \item{genes}{
 Vector of gene names to plot. By default, all genes in the summary will be plotted.
+}
+  \item{log.base}{
+Base of the logarithm to indicate on y-axis (does not affect plotting).
 }
 }
 \details{

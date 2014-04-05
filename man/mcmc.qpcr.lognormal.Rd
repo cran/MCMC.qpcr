@@ -9,7 +9,8 @@ Use in combination with cq2log(), on datasets without too many Cq values above 3
 }
 \usage{
 mcmc.qpcr.lognormal(fixed, random = NULL, data, controls = NULL, 
-include = NULL, m.fix = 1.2, v.fix = NULL, genebysample = T, vprior = "flat", ...)
+normalize=FALSE, include = NULL, m.fix = 1.2, v.fix = NULL, 
+geneSpecRes=TRUE,vprior = "uninf", ...)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
@@ -27,6 +28,14 @@ output of the cq2log() function
 Vector of control gene names. These will be pushed to the back of the gene list during model fitting,
 in the reverse order.
 }
+  \item{normalize}{
+If controls are specified, requiring 'normalize=TRUE' will perform "soft normalization":
+the mean of control genes will be used to infer global effects 
+(common to all genes) across conditions; these will be subtracted when summarizing the data
+with HPDsummary(). Use this option when template abundances are correlated with 
+conditions. Note that this is different from normalizing data within each sample, as per
+Vandesompele et al 2002; this would be "hard normalization" (use mcmc.qpcr.classic() if you want it).
+}
   \item{include}{
 How many of the control genes ('controls') to actually incorporate as priors during model
 fitting. If left unspecified, all the 'controls' will be used. If 'include=0', the model
@@ -41,15 +50,15 @@ of models fitted with different number of control genes, using HPDplot and HPDpo
 Allowed average fold-change of the control genes in response to any fixed factor combination.
 }
   \item{v.fix}{
-Allowed residual fold-change deviation of the control genes between samples.
+Allowed residual fold-change deviation of the control genes. Applies to the residual variation term.
 }
-  \item{genebysample}{
-Whether random gene by sample interactions should be
-modeled as an additional random effect (see details). This requires technical replicates; if there are too many samples for which 
-technical replicates are missing the model may not run, in which case specify 'genebysample=F'. 
+  \item{geneSpecRes}{
+Whether the model should include gene-specific residuals.
+Keep it TRUE unless the model fails to converge.
 }
    \item{vprior}{
-Allows to set weakly informative inverse Wishart priors for variance components instead of the default flat prior. vprior="iw" will assume large prior variance (1), vprior="iw01" will assume small prior variance (0.1). Be careful with these, setting informative priors may affect the results if the data is not extensive enough, or all the variances are very small.
+The default prior is an uninformative inverse Wishart with assumed variance (V) at 1 
+and the degree of belief parameter (nu) at 0. With 'prior="iw"' and 'prior="iw01"' nu is equal  [number of genes]-0.998, resulting in a weakly informative prior that is commonly used in this type of inference. vprior="iw" will assume large prior variance (1), vprior="iw01" will assume small prior variance (0.1). 
 }
  \item{\dots}{
 other options for MCMCglmm function, such as nitt (number of iterations), thin (tinning interval), and burnin (number of initial iterations to disregard). For a more precise inference (but longer runs) specify 'nitt=45000, thin=20, burnin=5000'. See MCMCglmm documentation for more details.

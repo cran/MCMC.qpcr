@@ -9,8 +9,8 @@ Wrapper function for MCMCglmm by Jarrod Hadfield, designed for qRT-PCR data
 analysis. 
 }
 \usage{
-mcmc.qpcr(fixed, random = NULL, data, controls = NULL, include = NULL, 
-m.fix = 1.2, v.fix = NULL, genebysample = T, vprior="flat", ...)
+mcmc.qpcr(fixed, random = NULL, data, controls = NULL, normalize=FALSE,include = NULL, 
+m.fix = 1.2, v.fix = NULL, geneSpecRes=TRUE, vprior="uninf", ...)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
@@ -19,14 +19,22 @@ desired combination of fixed effects, as a text string. Do not use "*" symbol, l
 it fully, such as: 'factor1+factor2+factor1:factor2'. 
 }
   \item{random}{
-A vector of names for gene-specific random effects, such as 'c("effect1","effect2")'.
+A vector of names for gene-specific scalar random effects, such as 'c("effect1","effect2")'.
 }
   \item{data}{
 output of the cq2counts() function
 }
   \item{controls}{
 Vector of control gene names. These will be pushed to the back of the gene list during model fitting,
-in the reverse order.
+in the reverse order. Controls are NOT NECESSARY for the analysis.
+}
+  \item{normalize}{
+If controls are specified, requiring 'normalize=TRUE' will perform "soft normalization":
+the geometric mean of control genes will be used to infer global effects 
+(common to all genes) across conditions; these will be subtracted when summarizing the data
+with HPDsummary(). Use this option when template abundances are correlated with 
+conditions. Note that this is different from normalizing data within each sample, as per
+Vandesompele et al 2002; this would be "hard normalization" (use mcmc.qpcr.classic() if you want it).
 }
   \item{include}{
 How many of the control genes ('controls') to actually incorporate as priors during model
@@ -42,20 +50,18 @@ of models fitted with different number of control genes, using HPDplot and HPDpo
 Allowed average fold-change of the control genes in response to any fixed factor combination.
 }
   \item{v.fix}{
-Allowed residual fold-change deviation of the control genes between samples. If the dataset includes techincal replicates, 
-this will apply to the gene by sample interaction term, if not, to the residual variation.
+Allowed residual fold-change deviation of the control genes. Applies to the residual variation term.
 }
-  \item{genebysample}{
-Whether random gene by sample interactions should be
-modeled as an additional random effect (see details). This requires technical replicates; if there are too many samples for which 
-technical replicates are missing the model may not run, in which case specify 'genebysample=F'. 
+  \item{geneSpecRes}{
+Whether the model should include gene-specific residuals.
+Keep it TRUE unless the model fails to converge. 
 }
    \item{vprior}{
-Allows to set weakly informative inverse Wishart priors for variance components instead of the default flat prior. vprior="iw" will assume large prior variance (1), vprior="iw01" will assume small prior variance (0.1). Be careful with these, setting informative priors may affect the results if the data is not extensive enough.
+The default prior is an uninformative inverse Wishart with assumed variance (V) at 1 
+and the degree of belief parameter (nu) at 0. With 'prior="iw"' and 'prior="iw01"' nu is equal  [number of genes]-0.998, resulting in a weakly informative prior that is commonly used in this type of inference. vprior="iw" will assume large prior variance (1), vprior="iw01" will assume small prior variance (0.1). 
 }
   \item{\dots}{
-other options for MCMCglmm function, such as nitt (number of iterations), thin (tinning interval), and burnin (number of initial iterations to disregard). For a more precise inference, such as required for model comparison, specify 'nitt=45000, thin=20, burnin=5000' (such a run may take
-10-15 minutes, though). See MCMCglmm documentation for more details.
+other options for MCMCglmm function, such as nitt (number of iterations), thin (tinning interval), and burnin (number of initial iterations to disregard). For a more precise inference specify 'nitt=45000, thin=20, burnin=5000'. See MCMCglmm documentation for more details.
 }
 }
 \details{
@@ -63,34 +69,29 @@ This function constructs priors and runs an MCMC chain to fit a Poisson-lognorma
 
 The fixed effects for the model by default assume a gene-specific intercept, and gene-specific effect for each of the listed fixed factors. 
 
-The specified random effects are all assumed to be gene-specific with no covariances. 
+The user-specified random effects are all assumed to be gene-specific with no covariances. 
 
-There are also two universal random factors. The first one the scalar random effect of sample,
-which accounts for the unequal template loading. The second one is random gene by sample interaction, 
-to estimate how much variation is indeed due to difference between samples rather than to measurement error (the deviations between technical replicates). Note that the dataset must contain technical replicates for this variance component to work; 
-if there are no replicates the factor will not be included irrespective of what the function call says. If only a few samples have technical
-replicates, the model may not run; specify 'genebysample=F'.
+There is also a universal random factor: the scalar random effect of sample,
+which accounts for the unequal template loading. 
 
-Residual variances are assumed to be gene-specific.
+Residual variances are assumed to be gene-specific with no covariances, with weakly informative inverse Wishart prior (variance=1, nu=[number of genes]-0.998).
 
-The prior is set up to reflect the above structure. The priors for fixed effects are diffuse gaussians with 
+The priors for fixed effects are diffuse gaussians with 
 a mean at 0 and very large variances (1e+8), except for control genes, for which the prior variances are defined 
-by the m.fix parameter. For the gene-specific random effects and residual variation, non-informative priors are used to achieve results equivalent to ML estimation. For control genes, when v.fix parameter is specified, it will be used to restrict the variance due to gene by sample interaction
-if the dataset contains technical replicates, and if it does not, it will restrict the residual variance. 
+by the m.fix parameter. For the gene-specific random effects and residual variation, non-informative priors are used to achieve results equivalent to ML estimation. For control genes, when v.fix parameter is specified, it will be used to restrict residial variance. 
 
 Both m.fix and v.fix parameters should be specified as allowed average fold-change, so the lowest they can go is 1 (no variation). 
+
 All control genes share the same m.fix and v.fix parameters.
 }
 \value{
-An MCMCglmm object. It contains all the results
-of MCMC sampling during model fitting. If the object is named, for example, mm, use summary(mm) to see means, 
-95\% credible intervals, and Bayesian p-values of all fixed effects, and how variance partitions 
-between random effects and residuals. 
-Note that the effects and credible intervals in the 
-summary will be expressed as a natural logarithm of fold change; divide them by log(2) 
-to convert to logarithm with the base 2 (at least for me, qPCR results are easier to understand on the log2 scale, since such values are like PCR cycles). 
+An MCMCglmm object. HPDsummary() function within this package summaizes these data, 
+calculates all gene-wise credible intervals and p-values, and plots the results either 
+as line-point-whiskers graph or a bar-whiskers graph using ggplot2 functions. 
 
-HPDplot() function within this package plots the results for all genes across a particular condition and outputs p-values. HPDplotBygene() function plots results for a number of specified conditions for a particular gene and performs pairwise comparisons between conditions. Function HPDplotBygeneBygroup() overlays several graphs produced by HPDplotBygene() on the same plot.
+HPDsummary() only works for experiments with a single multilevel factor or two fully 
+crossed multilevel factors. Use finctions HPDplot(), HPDplotBygene() and HPDplotBygeneBygroup() 
+to summarize and plot more complicated designs.
 
 For more useful operations on MCMCglmm objects, such as posterior.mode(), HPDinterval(),
 and plot(), see documentation for MCMCglmm package.
@@ -123,7 +124,7 @@ qs$treatment.time=as.factor(paste(qs$tr,qs$time,sep="."))
 naive=mcmc.qpcr(
 	fixed="treatment.time",
 	data=qs,
-	nitt=4000 # remove this line in actual analysis!
+	nitt=3000,burnin=2000 # remove this line in actual analysis!
 )
 
 #summary plot of inferred abundances

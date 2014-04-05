@@ -1,5 +1,5 @@
 summaryPlot <-
-function(data,xgroup,facet=NA,type="bar",x.order=NA,whiskers="ci",genes=NA){
+function(data,xgroup,facet=NA,type="bar",x.order=NA,whiskers="ci",genes=NA,log.base=2){
 #	smry=su01;xgroup="condition";type="line";whiskers="ci";facet="timepoint";genes=NA;x.order=NA
 	smry=data
 	if(!is.na(genes[1])){ smry=smry[smry$gene %in% genes,] }
@@ -12,7 +12,7 @@ function(data,xgroup,facet=NA,type="bar",x.order=NA,whiskers="ci",genes=NA){
 				width=0.7,position=pd)+
 				geom_line(aes_string(group="gene"),position=pd)+
 				geom_point(aes_string(group="gene"),position=pd,size=2.5)+
-				theme_bw()+xlab(xgroup)+ylab("log(abundance)")
+				theme_bw()+xlab(xgroup)+ylab(paste("log",log.base,"(abundance)",sep=""))
 		}
 		if (type=="bar" & whiskers=="ci") {
 			pd=position_dodge(0.85)
@@ -20,7 +20,7 @@ function(data,xgroup,facet=NA,type="bar",x.order=NA,whiskers="ci",genes=NA){
 				geom_bar(stat="identity",position=pd)+
 				geom_errorbar(aes_string(ymin="lower",ymax="upper"),lwd=0.4,width=0.5,
 				colour="grey40",position=pd)+
-				theme_bw()+xlab(xgroup)+ylab("log(fold change)")
+				theme_bw()+xlab(xgroup)+ylab(paste("log",log.base,"(fold change)",sep=""))
 		}
 		if (type=="line" & whiskers=="sd") {
 			pd=position_dodge(0.3)
@@ -29,7 +29,7 @@ function(data,xgroup,facet=NA,type="bar",x.order=NA,whiskers="ci",genes=NA){
 				lwd=0.4,width=0.7,position=pd)+
 				geom_line(aes_string(group="gene"),position=pd)+
 				geom_point(aes_string(group="gene"),position=pd,size=2.5)+
-				theme_bw()+xlab(xgroup)+ylab("log(abundance)")
+				theme_bw()+xlab(xgroup)+ylab(paste("log",log.base,"(abundance)",sep=""))
 		}
 		if (type=="bar" & whiskers=="sd") {
 			pd=position_dodge(0.85)
@@ -37,7 +37,7 @@ function(data,xgroup,facet=NA,type="bar",x.order=NA,whiskers="ci",genes=NA){
 				geom_bar(stat="identity",position=pd)+
 				geom_errorbar(aes(ymin=mean-sd,ymax=mean+sd),
 				lwd=0.4,width=0.5,colour="grey40",position=pd)+
-				theme_bw()+xlab(xgroup)+ylab("log(fold change)")
+				theme_bw()+xlab(xgroup)+ylab(paste("log",log.base,"(fold change)",sep=""))
 		}
 	} else {
 		if (type=="line" & whiskers=="ci") {
@@ -48,7 +48,7 @@ function(data,xgroup,facet=NA,type="bar",x.order=NA,whiskers="ci",genes=NA){
 				geom_line(aes_string(group="gene"),position=pd)+
 				geom_point(aes_string(group="gene"),position=pd,size=2.5)+
 				facet_wrap(as.formula(paste("~", facet)))+
-				theme_bw()+xlab(xgroup)+ylab("log(abundance)")
+				theme_bw()+xlab(xgroup)+ylab(paste("log",log.base,"(abundance)",sep=""))
 		}
 		if (type=="bar" & whiskers=="ci") {
 			pd=position_dodge(0.85)
@@ -57,7 +57,7 @@ function(data,xgroup,facet=NA,type="bar",x.order=NA,whiskers="ci",genes=NA){
 				geom_errorbar(aes_string(ymin="lower",ymax="upper"),
 				lwd=0.4,width=0.5,colour="grey40",position=pd)+
 				facet_wrap(as.formula(paste("~", facet)))+
-				theme_bw()+xlab(xgroup)+ylab("log(fold change)")
+				theme_bw()+xlab(xgroup)+ylab(paste("log",log.base,"(fold change)",sep=""))
 		}
 		if (type=="line" & whiskers=="sd") {
 			pd=position_dodge(0.3)
@@ -67,7 +67,7 @@ function(data,xgroup,facet=NA,type="bar",x.order=NA,whiskers="ci",genes=NA){
 				geom_line(aes_string(group="gene"),position=pd)+
 				geom_point(aes_string(group="gene"),position=pd,size=2.5)+
 				facet_wrap(as.formula(paste("~", facet)))+
-				theme_bw()+xlab(xgroup)+ylab("log(abundance)")
+				theme_bw()+xlab(xgroup)+ylab(paste("log",log.base,"(abundance)",sep=""))
 		}
 		if (type=="bar" & whiskers=="sd") {
 			pd=position_dodge(0.85)
@@ -75,7 +75,7 @@ function(data,xgroup,facet=NA,type="bar",x.order=NA,whiskers="ci",genes=NA){
 				geom_bar(stat="identity",position=pd)+
 				geom_errorbar(aes(ymin=mean-sd,ymax=mean+sd),lwd=0.4,width=0.5,colour="grey40",position=pd)+
 				facet_wrap(as.formula(paste("~", facet)))+
-				theme_bw()+xlab(xgroup)+ylab("log(fold change)")
+				theme_bw()+xlab(xgroup)+ylab(paste("log",log.base,"(fold change)",sep=""))
 		}
 	}
 	print(gpp)

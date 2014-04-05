@@ -93,7 +93,7 @@ mm=mcmc.qpcr(
 	fixed="condition",
 	data=dd,
 	controls=c("nd5","rpl11"),
-	nitt=4000 # remove this line when analyzing real data!
+	nitt=3000,burnin=2000 # remove this line when analyzing real data!
 )
 
 # plotting abundances of individual genes across all conditions

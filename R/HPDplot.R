@@ -7,6 +7,7 @@ function(model,factors,factors2=NULL,ylimits=NULL,hpdtype="w",inverse=F,jitter=0
 	genes=allnames[-grep(":",allnames)]
 	genes=genes[grep("gene",genes)]
 	genes=sub("gene","",genes)
+	if(genes[1]=="NORM") { genes=genes[-1] } 
 	ngenes=length(genes)
 	first=1
 	for (f in factors){		

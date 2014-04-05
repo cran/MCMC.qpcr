@@ -1,10 +1,13 @@
 HPDsummary <-
-function(model,data,genes=NA,relative=FALSE,
+function(model,data,xgroup=NULL,genes=NA,relative=FALSE,
 log.base=2,summ.plot=TRUE,ptype="z",...) {
+	
+#model=cla;data=qs;xgroup=NULL;genes=NA;relative=FALSE;log.base=2;summ.plot=TRUE;ptype="z"
+
 	mm=model;base=log.base
 	gene.results=list()
-	trms=sub("gene:","",attr(terms(mm$Fixed$formula),
-	"term.labels")[2:length(attr(terms(mm$Fixed$formula),"term.labels"))])
+	trms=attr(terms(mm$Fixed$formula),"term.labels")[grep("gene:",attr(terms(mm$Fixed$formula),"term.labels"))]
+	trms=sub("gene:","",trms)
 	sols=colnames(mm$Sol)
 	if (is.na(genes[1])) { genes=sub("gene","",sols[grep("gene[^:]*$",sols)])}
 	facts =list()
@@ -16,37 +19,73 @@ log.base=2,summ.plot=TRUE,ptype="z",...) {
 	if (nfactors>2) { 
 		stop("not implemented for more than 2 crossed factors")
 	}
-	gsols=c();fac1=c();fac2=c();samps=c()
+	gsols=c();fac1=c();fac2=c();samps=c();skips=c()
+	
+	globalInt=rep(0,length(mm$Sol[,1]))	
+	if(sols[1]=="(Intercept)") { 
+		globalInt=rep(mean(mm$Sol[,"(Intercept)"]),length(mm$Sol[,1]))
+	} 
+	
+	interaction=0
+	if (nfactors==2) {
+		sol=paste("gene",genes[2],":",names(facts)[1],facts[[1]][2],":",names(facts)[2],facts[[2]][2],sep="")
+		if (sol %in% sols) {
+			interaction=1
+		}
+	}
+
 	for (gene in genes) {
-		fac1g=c();fac2g=c();sampsg=c()
+		fac1g=c();fac2g=c();sampsg=c();skip=FALSE
 		for (lev1 in 1:length(facts[[1]])) {
 			if (nfactors==2) {
 				for (lev2 in 1:length(facts[[2]])) {
 					if (lev1==1 & lev2==1) { 
 						sol=paste("gene",gene,sep="")
-						samp=mm$Sol[,sol]*as.numeric(!relative)
+						if(sum(grep(sol,sols))==0) {
+							skip=TRUE
+							next
+						}
+						samp=(globalInt+mm$Sol[,sol])*as.numeric(!relative)
 						int0=samp
 					} else {
 						if (lev2==1) { 
-							sol=paste("gene",gene,":",
-							names(facts)[1],facts[[1]][lev1],sep="")
+							sol=paste("gene",gene,":",names(facts)[1],facts[[1]][lev1],sep="")
+							if(sum(grep(sol,sols))==0) {
+								skip=TRUE
+								next
+							}
 							samp=int0+mm$Sol[,sol]
 							int2=mm$Sol[,sol]
 						} else {
 							if (lev1==1) { 
-								sol=paste("gene",gene,":",
-								names(facts)[2],facts[[2]][lev2],sep="") 
+								sol=paste("gene",gene,":",names(facts)[2],facts[[2]][lev2],sep="") 
+								if(sum(grep(sol,sols))==0) {
+									skip=TRUE
+									next
+								}
 								samp=int0+mm$Sol[,sol]
 								int1=mm$Sol[,sol]
 							} else {
 								sol=paste("gene",gene,":",
 								names(facts)[1],facts[[1]][lev1],
 								":",names(facts)[2],facts[[2]][lev2],sep="") 
-								samp=int0+int1+int2+mm$Sol[,sol]
+								if(sum(grep(sol,sols))==0 & interaction==1) {
+									skip=TRUE
+									next
+								}
+								if (interaction==1) {
+									samp=int0+int1+int2+mm$Sol[,sol]
+								} else { 
+									samp=int0+int1+int2
+								}
 							}
 						}
 					}
 		#			print(paste(lev1,lev2,sol))
+					if (skip) { 
+#						genes=genes[!(genes %in% gene)]						
+						next 
+					}
 					gsols=append(gsols,gene)
 					fac1g=append(fac1g,facts[[1]][lev1])
 					fac2g=append(fac2g,facts[[2]][lev2])
@@ -55,17 +94,33 @@ log.base=2,summ.plot=TRUE,ptype="z",...) {
 			} else {
 				if (lev1==1) { 
 						sol=paste("gene",gene,sep="") 
-						samp=mm$Sol[,sol]*as.numeric(!relative)
+						if(sum(grep(sol,sols))==0) {
+							skip=TRUE
+							next
+						}
+						samp=(globalInt+mm$Sol[,sol])*as.numeric(!relative)
 						int0=samp
 				} else {
 					sol=paste("gene",gene,":",
 					names(facts)[1],facts[[1]][lev1],sep="")
+					if(sum(grep(sol,sols))==0) {
+						skip=TRUE
+						next
+					}
 					samp=int0+mm$Sol[,sol]
+				}
+				if (skip) { 
+#					genes=genes[!(genes %in% gene)]
+					next 
 				}
 				gsols=append(gsols,gene)
 				fac1g=append(fac1g,facts[[1]][lev1])
 				sampsg=cbind(sampsg,samp)
 			}
+		}
+		if (skip) { 
+			skips=append(skips,gene)
+			next 
 		}
 		fac1=append(fac1,fac1g)
 		samps=cbind(samps,sampsg)
@@ -87,11 +142,15 @@ log.base=2,summ.plot=TRUE,ptype="z",...) {
 				gres[j,i]=mcmc.pval(diff,ptype=ptype)
 				gres[i,j]=mean(diff)/log(base)
 			}	
-		}
+		}		
 		gene.results=append(gene.results,list(gres))
 		names(gene.results)[length(gene.results)]=gene		
 	}
-	
+
+	genes=genes[!(genes %in% skips)]
+	for (ge in skips) { 
+		gsols=gsols[-c(grep(ge,gsols))]		
+	}
 	big.summary=data.frame(cbind("gene"=gsols,"f1"=fac1))
 	names(big.summary)[2]=names(facts[1])
 	if(nfactors==2) {
@@ -105,7 +164,8 @@ log.base=2,summ.plot=TRUE,ptype="z",...) {
 	upper=apply(samps,2,function(x) { return(quantile(x,0.95)) })
 	big.summary=cbind(big.summary,"mean"=mns,
 	"sd"=sds,"lower"=lower,"upper"=upper)
-	
+	ploo=NULL
+
 	if(relative) {
 		if (nfactors==2) { 
 			remov=which(
@@ -116,24 +176,34 @@ log.base=2,summ.plot=TRUE,ptype="z",...) {
 			big.summary=big.summary[big.summary[,2]!=facts[[1]][1],] 
 			}
 	}
+	if (is.null(xgroup)) {
+		xgroup=names(facts[1])
+		if(nfactors==2) { facet=names(facts[2]) }
+	} else {
+		if (xgroup==names(facts[1])) {
+			if(nfactors==2) { facet=names(facts[2]) }
+		} else {
+			facet=names(facts[1])
+		}
+	}
 
 	if(summ.plot) { 
 		if (!relative) { 
 			if (nfactors==2) {
-				summaryPlot(big.summary,xgroup=names(facts[1]),
-				facet=names(facts[2]),type="line",...) 
+				ploo=summaryPlot(big.summary,xgroup=xgroup,
+				facet=facet,type="line",log.base=log.base,...) 
 			} else {
-				summaryPlot(big.summary,xgroup=names(facts[1]),type="line",...) 
+				ploo=summaryPlot(big.summary,xgroup=names(facts[1]),type="line",log.base=log.base,...) 
 			}
 		} else {
 			if (nfactors==2) {
-				summaryPlot(big.summary,xgroup=names(facts[1]),
-				facet=names(facts[2]),type="bar",...) 
+				ploo=summaryPlot(big.summary,xgroup=xgroup,
+				facet=facet,type="bar",log.base=log.base,...) 
 			} else {
-				summaryPlot(big.summary,xgroup=names(facts[1]),type="bar",...) 
+				ploo=summaryPlot(big.summary,xgroup=names(facts[1]),type="bar",log.base=log.base,...) 
 			}
 		}
 	}
 
-	return(list("summary"=big.summary,"geneWise"=gene.results))
+	return(list("summary"=big.summary,"geneWise"=gene.results,"ggPlot"=ploo))
 }

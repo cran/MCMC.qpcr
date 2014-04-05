@@ -7,7 +7,8 @@ Analyzes qRT-PCR data using "classic" model, based on multigene normalization.
 Normalizes the data using specified control genes, fits a single model to estimate changes at all genes. Use for datasets with not too many Cq values above 30.
 }
 \usage{
-mcmc.qpcr.classic(fixed, random = NULL, data, controls, genebysample = T, center = T, ...)
+mcmc.qpcr.classic(fixed, random = NULL, data, controls, 
+genebysample = TRUE, geneSpecRes=FALSE, center = T, ...)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
@@ -27,8 +28,13 @@ in the reverse order.
 }
   \item{genebysample}{
 Whether random gene by sample interactions should be
-modeled as an additional random effect (see details). This requires technical replicates; if there are too many samples for which 
-technical replicates are missing the model may not run, in which case specify 'genebysample=F'. 
+modeled as an additional random effect. If the model fails to converge, specify 'genebysample=F'. 
+}
+  \item{geneSpecRes}{
+Whether the model should include gene-specific residuals.
+This was the default in MCMC.qpcr v.1.0; now it is switched off
+since it does not have any visible effect on the results (as long as genebysample=TRUE), 
+and only makes the model converge slower or fail to converge.  
 }
   \item{center}{
 Whether to center the normalized log-transformed Cq values arond the mean for each gene. Centering does not affect the inference; it only makes the plots of the results more comprehensible (in my opinion). 

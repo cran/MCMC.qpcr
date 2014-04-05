@@ -30,8 +30,8 @@ http://www.bio.utexas.edu/research/matz_lab/matzlab/Methods_files/mcmc.qpcr.tuto
 \tabular{ll}{
 Package: MCMC.qpcr\cr
 Type: Package\cr
-Version: 1.0.1\cr
-Date: 2013-07-23\cr
+Version: 1.1.3\cr
+Date: 2014-04-05\cr
 License: GPL-3\cr
 }
 }
@@ -64,7 +64,7 @@ qs$treatment.time=as.factor(paste(qs$tr,qs$time,sep="."))
 naive=mcmc.qpcr(
 	fixed="treatment.time",
 	data=qs,
-	nitt=4000 # remove this line in actual analysis!
+	nitt=3000,burnin=2000 # remove this line in actual analysis!
 )
 
 #summary plot of inferred abundances

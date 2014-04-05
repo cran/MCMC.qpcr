@@ -1,5 +1,5 @@
 mcmc.qpcr.classic <-
-function(fixed,random=NULL,data,controls,genebysample=T,center=T,...) {
+function(fixed,random=NULL,data,controls,genebysample=TRUE,geneSpecRes=FALSE,center=T,...) {
 	ngenes=length(levels(data[,"gene"]))
 
 #checking if there are technical reps
@@ -17,7 +17,7 @@ function(fixed,random=NULL,data,controls,genebysample=T,center=T,...) {
 
 # assembling the random effects formula:
 	rr="~"
-	if(reps & genebysample)	random=append(random,"sample")
+	if(genebysample)	random=append(random,"sample")
 	for (r in random){
 			if (r==random[1]) rr=paste(rr,"idh(gene):",r,sep="") else rr=paste(rr,"+idh(gene):",r,sep="") 
 	}
@@ -34,7 +34,18 @@ function(fixed,random=NULL,data,controls,genebysample=T,center=T,...) {
 	data[,"gene"]=factor(data[,"gene"],levels=relev)
 
 	ddn=normalize.qpcr(data,controls,center)
-	
-mc=MCMCglmm(formula(ff),random=formula(rr),rcov=~idh(gene):units,data=ddn,...)
+	if (geneSpecRes){
+		if (rr=="~") {
+			mc=MCMCglmm(formula(ff),rcov=~idh(gene):units,data=ddn,...)
+		} else { 
+			mc=MCMCglmm(formula(ff),random=formula(rr),rcov=~idh(gene):units,data=ddn,...) 
+		}
+	} else {
+		if (rr=="~") {
+			mc=MCMCglmm(formula(ff),data=ddn,...)
+		} else { 
+			mc=MCMCglmm(formula(ff),random=formula(rr),data=ddn,...) 
+		}
+	}	
 	return(mc)
 }

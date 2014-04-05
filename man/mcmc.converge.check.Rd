@@ -27,8 +27,8 @@ A series of plots for each gene-specific fixed effect.
 
 The MCMC trace plot is on the left, to see if there is convergence (lack of systematic
 trend) and no autocorrelation (no low-frequency waves). If lack of convergence is suspected, 
-try increasing number of iterations and burnin by specifying, for example, nitt=25000, 
-burnin=15000, as additional options for mcmc.qpcr. If autocorrelation is present, increase 
+try increasing number of iterations and burnin by specifying, for example, nitt=50000,
+burnin=5000, as additional options for mcmc.qpcr. If autocorrelation is present, increase 
 thinning interval by specifying thin=20 in mcmc.qpcr (you might wish to increase the number of iterations,
 nitt, to keep the size of MCMC sample the same)
 
