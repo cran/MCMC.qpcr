@@ -1,12 +1,15 @@
 HPDplotBygeneBygroup = function(model,gene,group1,group2,group3=NULL,interval="ci",colors=c("coral","cyan3","grey50"),symbols=c(19,17,15),jitter=0.16,yscale="log2",...) {
+	
+#model=naive2;gene="mir9";group1=a1221;group2=dmso;group3=eb;interval="ci";colors=c("coral","cyan3","grey50");symbols=c(19,17,15);jitter=0.16;yscale="log2"	
+	
 	a=HPDplotBygene(model,gene,conditions=group1,interval=interval,plot=F,yscale=yscale,...)
 	b=HPDplotBygene(model,gene,conditions=group2,interval=interval,plot=F,yscale=yscale,...)
 	lims=c(a$min,a$max,b$min,b$max)
 	jit=c(0-jitter/2,0+jitter/2)
 	if (is.null(group3)==FALSE) {
 		c=HPDplotBygene(model,gene,conditions=group3,interval=interval,plot=F,...)
-		lims=append(lims,c$min,c$max)
-		jit=c(0-jitter,0+jitter)
+		lims=append(lims,c(c$min,c$max))
+		jit=c(0-jitter,0,0+jitter)
 	}
 marg=0.25
 if (yscale=="proportion") {

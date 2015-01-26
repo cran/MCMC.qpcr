@@ -1,3 +1,4 @@
 exportPattern("^[[:alpha:]]+")
+import(coda)
 import(MCMCglmm)
 import(ggplot2)

@@ -1,8 +1,8 @@
-a7e8bd7861b8d9339c6bcf6f5e97d1d6 *DESCRIPTION
-0a3c325c2d3ba6a7ece52a39b4f3b2a9 *NAMESPACE
+2daf93998f0b039e5f4fe2cf39c71a7a *DESCRIPTION
+c7674c1e19eddf66e3b0c3e94b325a8a *NAMESPACE
 f2d296810b6bf04348cec4d62cf635c6 *R/HPDplot.R
 feacc267fd9c19bbc4f2d32b8d7aae0e *R/HPDplotBygene.R
-94dc4a9935eb172eda990b34125f0ca8 *R/HPDplotBygeneBygroup.R
+a2e5964b0ee98e4d440455273ecae6ab *R/HPDplotBygeneBygroup.R
 4c171b056d5dfa2769b5b8f1fc9fc8fe *R/HPDpoints.R
 0cb8f86a31d8d6ad23723031c4e21c74 *R/HPDsummary.R
 7cd3d5c87a12ce761c187cfa1e35f039 *R/PrimEff.R
@@ -21,6 +21,7 @@ edebd94f47c773e4ba696b8d8a79b60d *R/cq2counts.R
 de57d0939689abf21678794ec006d317 *R/padj.qpcr.R
 bc90d8493b32dc2d014b00bb0321a2a9 *R/softNorm.R
 8a070a07d8b7d84631e2e0c51de97d33 *R/summaryPlot.R
+08daf3279a01de8c65182744579e0c50 *R/trellisByGene.R
 c4ccf89a6d9ab24255aee5ccdba8ef8f *data/amp.eff.rda
 70f485dfb47cd0b4e6907bda8a0a4bcf *data/beckham.data.rda
 fb609d6f34d1cc20f3bc6d5a69fe838c *data/beckham.eff.rda
@@ -31,7 +32,7 @@ f33f0afba0beb5ea46c2fb37c17e870c *man/HPDplotBygene.Rd
 7cd9889cbc6cd528e3b9116776a7bd5d *man/HPDplotBygeneBygroup.Rd
 b3aefe07c3ab62b5a685c219e5844b86 *man/HPDpoints.Rd
 2b84f21f7d989891b05827ea988ead6f *man/HPDsummary.Rd
-7300a5157164e53c7535f0f93e87404a *man/MCMC.qpcr-package.Rd
+c6d64819ddceffbfd1ec22b7e5cc0f89 *man/MCMC.qpcr-package.Rd
 7868ae3fd3977767f2530ddb96f6b7d3 *man/PrimEff.Rd
 622c37e4ab50053a35db951478326672 *man/amp.eff.Rd
 fb5c188769c358998a22b9e531aac3a0 *man/beckham.data.Rd
@@ -42,7 +43,7 @@ ed6e6d0807fa6fe3063f19932ec06a3f *man/beckham.eff.Rd
 d06f6c591904648247e1ad2801f2bfe6 *man/cq2log.Rd
 6eedae878195b9f8f829bdbb1bda7228 *man/diagnostic.mcmc.Rd
 074eca55f9ab1c2ba2d2ff8c9536b678 *man/dilutions.Rd
-2ba16c5054e38acc881f6161a5924e7a *man/getNormalizedData.Rd
+0f4e9800f5a4a3aeb0c4b47474eedf2d *man/getNormalizedData.Rd
 c707b4eacf74e389df0ad5d864d71060 *man/mcmc.converge.check.Rd
 085b303b7e27436f9df4deb342d9798d *man/mcmc.pval.Rd
 3feff303bc4af8954d6c2a3b40ada009 *man/mcmc.qpcr.Rd
@@ -53,3 +54,4 @@ e458c422bfaacc8f5d181f10d53d0eab *man/outlierSamples.Rd
 ec21b03a4dab6a64da4dd55d593fb3ba *man/padj.qpcr.Rd
 43fe0023b6118eb5e64b87c4ea645228 *man/softNorm.Rd
 749c81e65871df02892986ed41b307cf *man/summaryPlot.Rd
+2aa4a31390a0406997821ab79c20343b *man/trellisByGene.Rd

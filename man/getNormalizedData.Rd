@@ -5,7 +5,7 @@
 Extracts qPCR model predictions
 }
 \description{
-Generates a table of model-derived log2-transformed transcript abundances without sample effects (i.e., corresponding to efficiency-corrected and normalized qPCR data)
+Generates a table of model-derived log2-transformed transcript abundances without global sample effects (i.e., corresponding to efficiency-corrected and normalized qPCR data)
 }
 \usage{
 getNormalizedData(model, data)
@@ -13,7 +13,7 @@ getNormalizedData(model, data)
 %- maybe also 'usage' for other objects documented here.
 \arguments{
   \item{model}{
-qPCR model: the output of mcmc.qpcr or mcmc.qpcr.lognormal function fitted with pr=TRUE option 
+qPCR model: the output of mcmc.qpcr or mcmc.qpcr.lognormal function fitted with two additional options: random="sample", pr=TRUE . These options do not change the inferences of main effects but make it possible to retain among-sample variation of expression for each gene while still subtracting the global sample effects (i.e., perform "normalization")
 }
   \item{data}{
 The dataset that was analysed to generate the model (output of cq2counts or cq2log functions)
@@ -30,33 +30,45 @@ Mikhail V. Matz, University of Texas at Austin
 <matz@utexas.edu>
 }
 \examples{
+library(MCMC.qpcr)
+
 # loading Cq data and amplification efficiencies
 data(coral.stress) 
 data(amp.eff) 
-# extracting a subset of data 
-cs.short=subset(coral.stress, timepoint=="one")
 
 genecolumns=c(5,6,16,17) # specifying columns corresponding to genes of interest
 conditions=c(1:4) # specifying columns containing factors  
 
 # calculating molecule counts and reformatting:
-dd=cq2counts(data=cs.short,genecols=genecolumns,
+dd=cq2counts(data=coral.stress,genecols=genecolumns,
 condcols=conditions,effic=amp.eff,Cq1=37) 
 
-# fitting the model
+# fitting the model (must include random="sample", pr=TRUE options)
 mm=mcmc.qpcr(
 	fixed="condition",
 	data=dd,
 	controls=c("nd5","rpl11"),
-	nitt=4000, # remove this line when analyzing real data!
-	pr=TRUE
+	nitt=4000,
+	pr=TRUE,
+	random="sample"
 )
 
 # extracting model predictions
 pp=getNormalizedData(mm,dd)
-# displaying model prediction
+
+# here is the normalized data:
 pp$normData
-# displaying experimental conditions
+
+# and here are the corresponding conditions:
 pp$conditions
 
+# putting them together for plotting:
+ppcombo=cbind(stack(pp$normData),rep(pp$conditions))
+names(ppcombo)[1:2]=c("expression","gene")
+
+# plotting boxplots of normalized data:
+ggplot(ppcombo,aes(condition,expression,colour=timepoint))+
+	geom_boxplot()+
+	facet_wrap(~gene,scales="free")+
+	theme_bw()
 }
