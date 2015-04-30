@@ -1,5 +1,5 @@
 mcmc.qpcr <-
-function(fixed,random=NULL,data,controls=NULL,normalize=FALSE,include=NULL,m.fix=1.2,v.fix=NULL,geneSpecRes=TRUE,vprior="uninf",...) {
+function(fixed,random=NULL,globalRandom=NULL,data,controls=NULL,normalize=FALSE,include=NULL,m.fix=1.2,v.fix=NULL,geneSpecRes=TRUE,Covar=FALSE,vprior="uninf",...) {
 
 #data=qs;fixed="treatment.time";controls="gapdh";normalize=TRUE;include=NULL;m.fix=1.2;v.fix=NULL;genebysample=TRUE;geneSpecRes=FALSE;vprior="uninf"
 
@@ -42,8 +42,15 @@ function(fixed,random=NULL,data,controls=NULL,normalize=FALSE,include=NULL,m.fix
 
 # assembling the random effects formula:
 	rr="~sample"
+	for (r in globalRandom){
+			rr=paste(rr,"+",r,sep="")
+	}
 	for (r in random){
+		if(Covar) {
+			rr=paste(rr,"+us(gene):",r,sep="")
+		} else {
 			rr=paste(rr,"+idh(gene):",r,sep="")
+		}			
 	}
 
 	if (is.null(controls)==FALSE){
@@ -72,10 +79,10 @@ function(fixed,random=NULL,data,controls=NULL,normalize=FALSE,include=NULL,m.fix
 				)
 				print(list("PRIOR"=prior,"FIXED"=ff,"RANDOM"=rr))
 				if (geneSpecRes) {
-					mc=MCMCglmm(
-						formula(ff),random=formula(rr),
-						rcov=~idh(gene):units,
-						data=data,prior=prior,family="poisson",...)
+						mc=MCMCglmm(
+							formula(ff),random=formula(rr),
+							rcov=~idh(gene):units,
+							data=data,prior=prior,family="poisson",...)
 				} else {
 					mc=MCMCglmm(
 						formula(ff),random=formula(rr),
