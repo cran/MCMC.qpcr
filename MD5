@@ -1,10 +1,10 @@
-5eee4aa6ffd6c0e8daef0d328363cee7 *DESCRIPTION
+1ab1602b24af7b94646add14edeee891 *DESCRIPTION
 c7674c1e19eddf66e3b0c3e94b325a8a *NAMESPACE
 f2d296810b6bf04348cec4d62cf635c6 *R/HPDplot.R
 feacc267fd9c19bbc4f2d32b8d7aae0e *R/HPDplotBygene.R
 a2e5964b0ee98e4d440455273ecae6ab *R/HPDplotBygeneBygroup.R
 4c171b056d5dfa2769b5b8f1fc9fc8fe *R/HPDpoints.R
-0cb8f86a31d8d6ad23723031c4e21c74 *R/HPDsummary.R
+992909a773793e200578b333a1ce546c *R/HPDsummary.R
 7cd3d5c87a12ce761c187cfa1e35f039 *R/PrimEff.R
 edebd94f47c773e4ba696b8d8a79b60d *R/cq2counts.R
 5a67de89340c70da00f13cd7a9e7a790 *R/cq2genorm.R
@@ -13,9 +13,9 @@ edebd94f47c773e4ba696b8d8a79b60d *R/cq2counts.R
 2379b61f13b93e1e1bdff76bdc30d591 *R/getNormalizedData.R
 165420f2bbd58bd57a3e4cb53407e6d8 *R/mcmc.converge.check.R
 46d7e9c8e991fd61582ec7411d0d46ff *R/mcmc.pval.R
-247bf4d8279f21defddb14fbe22317bb *R/mcmc.qpcr.R
-0cb746005695714c616ff34d81cea401 *R/mcmc.qpcr.classic.R
-14dced6c0b3cbb11cc4b5855b7b22793 *R/mcmc.qpcr.lognormal.R
+6609f7bb9dd2b2a5a41ce380becb1388 *R/mcmc.qpcr.R
+395f2d2ec8de9d491ee5533696646e90 *R/mcmc.qpcr.classic.R
+25a916d69e1765b0f9e815ab0214200b *R/mcmc.qpcr.lognormal.R
 0200f61ee3690ef267316dbb98df1e39 *R/normalize.qpcr.R
 070de2dee50ee78fc71ee1c1e0a1d8fc *R/outlierSamples.R
 de57d0939689abf21678794ec006d317 *R/padj.qpcr.R
@@ -32,7 +32,7 @@ f33f0afba0beb5ea46c2fb37c17e870c *man/HPDplotBygene.Rd
 7cd9889cbc6cd528e3b9116776a7bd5d *man/HPDplotBygeneBygroup.Rd
 b3aefe07c3ab62b5a685c219e5844b86 *man/HPDpoints.Rd
 2b84f21f7d989891b05827ea988ead6f *man/HPDsummary.Rd
-960f0f91839a773877fcb97d768fbd45 *man/MCMC.qpcr-package.Rd
+732627bd6e83d6c2690689f03368275e *man/MCMC.qpcr-package.Rd
 7868ae3fd3977767f2530ddb96f6b7d3 *man/PrimEff.Rd
 622c37e4ab50053a35db951478326672 *man/amp.eff.Rd
 fb5c188769c358998a22b9e531aac3a0 *man/beckham.data.Rd
@@ -46,9 +46,9 @@ d06f6c591904648247e1ad2801f2bfe6 *man/cq2log.Rd
 0f4e9800f5a4a3aeb0c4b47474eedf2d *man/getNormalizedData.Rd
 c707b4eacf74e389df0ad5d864d71060 *man/mcmc.converge.check.Rd
 085b303b7e27436f9df4deb342d9798d *man/mcmc.pval.Rd
-0b09a9f03d2ce215b0a75ec67e58c509 *man/mcmc.qpcr.Rd
-d6a3a0ffd92c06f83c6e6ed944410af8 *man/mcmc.qpcr.classic.Rd
-85f45318989696582fde43045b8ca517 *man/mcmc.qpcr.lognormal.Rd
+7bb607c9680baf29433ee48be6114860 *man/mcmc.qpcr.Rd
+f6546797baedc2b5aa3041d17c181326 *man/mcmc.qpcr.classic.Rd
+a49ffc19b1ed444275314572ea94c653 *man/mcmc.qpcr.lognormal.Rd
 379232caaeb982c02b77de3edc3230c7 *man/normalize.qpcr.Rd
 e458c422bfaacc8f5d181f10d53d0eab *man/outlierSamples.Rd
 ec21b03a4dab6a64da4dd55d593fb3ba *man/padj.qpcr.Rd

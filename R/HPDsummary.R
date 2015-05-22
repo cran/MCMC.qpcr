@@ -2,14 +2,17 @@ HPDsummary <-
 function(model,data,xgroup=NULL,genes=NA,relative=FALSE,
 log.base=2,summ.plot=TRUE,ptype="z",...) {
 	
-#model=cla;data=qs;xgroup=NULL;genes=NA;relative=FALSE;log.base=2;summ.plot=TRUE;ptype="z"
+#model=m0;data=qs;xgroup=NULL;genes=NA;relative=FALSE;log.base=2;summ.plot=TRUE;ptype="z"
 
 	mm=model;base=log.base
 	gene.results=list()
 	trms=attr(terms(mm$Fixed$formula),"term.labels")[grep("gene:",attr(terms(mm$Fixed$formula),"term.labels"))]
 	trms=sub("gene:","",trms)
 	sols=colnames(mm$Sol)
-	if (is.na(genes[1])) { genes=sub("gene","",sols[grep("gene[^:]*$",sols)])}
+	if (is.na(genes[1])) { 
+		genes=sub("gene","",sols[grep("gene.*$",sols)])
+		genes=unique(sub(":.*","",genes))	
+	}
 	facts =list()
 	for (t in trms) {
 		if (!grepl(":",t)) { facts =append(facts,list(levels(data[,t])))}
@@ -33,6 +36,12 @@ log.base=2,summ.plot=TRUE,ptype="z",...) {
 			interaction=1
 		}
 	}
+	
+	for (gene in genes) {
+		sol=paste("gene",gene,sep="")
+		if (!(sol %in% sols)) colnames(mm$Sol)[1]=sol
+	}
+	sols=colnames(mm$Sol)	
 
 	for (gene in genes) {
 		fac1g=c();fac2g=c();sampsg=c();skip=FALSE
@@ -54,6 +63,7 @@ log.base=2,summ.plot=TRUE,ptype="z",...) {
 								skip=TRUE
 								next
 							}
+							
 							samp=int0+mm$Sol[,sol]
 							int2=mm$Sol[,sol]
 						} else {

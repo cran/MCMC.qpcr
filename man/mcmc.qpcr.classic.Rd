@@ -7,8 +7,8 @@ Analyzes qRT-PCR data using "classic" model, based on multigene normalization.
 Normalizes the data using specified control genes, fits a single model to estimate changes at all genes. Use for datasets with not too many Cq values above 30.
 }
 \usage{
-mcmc.qpcr.classic(fixed, random = NULL, data, controls, 
-genebysample = TRUE, geneSpecRes=FALSE, center = T, ...)
+mcmc.qpcr.classic(fixed = NULL, globalFixed = NULL, random = NULL, globalRandom = NULL,
+data, controls, genebysample = TRUE, geneSpecRes=FALSE, center = TRUE, ...)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
@@ -16,8 +16,16 @@ genebysample = TRUE, geneSpecRes=FALSE, center = T, ...)
 desired combination of fixed effects, as a text string. Do not use "*" symbol, list
 it fully, such as: 'factor1+factor2+factor1:factor2'. 
 }
+  \item{globalFixed}{
+Vector of fixed covariates (categorical or continuous) that are expected to affect
+all genes in the sample in the same way. These would be typically related to quality 
+and/or quantity of RNA, such as RIN value.
+}
   \item{random}{
-A vector of names for gene-specific random effects, such as 'c("effect1","effect2")'.
+A vector of names for gene-specific scalar random effects, such as 'c("effect1","effect2")'.
+}
+  \item{globalRandom}{
+Random covariates (categorical only) affecting all genes, similar to globalFixed. 
 }
   \item{data}{
 output of the cq2log() function

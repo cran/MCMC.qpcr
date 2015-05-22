@@ -1,6 +1,5 @@
 \name{mcmc.qpcr}
 \alias{mcmc.qpcr}
-%- Also NEED an '\alias' for EACH other topic documented here.
 \title{
 Analyzes qRT-PCR data using generalized linear mixed model
 }
@@ -9,9 +8,9 @@ Wrapper function for MCMCglmm by Jarrod Hadfield, designed for qRT-PCR data
 analysis. 
 }
 \usage{
-mcmc.qpcr(fixed, random = NULL, globalRandom=NULL, data, controls = NULL, 
-normalize=FALSE, include = NULL, m.fix = 1.2, v.fix = NULL, geneSpecRes=TRUE, 
-Covar=FALSE, vprior="uninf", ...)
+mcmc.qpcr(fixed=NULL, globalFixed=NULL, random = NULL, globalRandom=NULL, data, 
+controls = NULL, normalize=FALSE, include = NULL, m.fix = 1.2, v.fix = NULL, 
+geneSpecRes=TRUE, Covar=FALSE, vprior="uninf", ...)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
@@ -19,13 +18,16 @@ Covar=FALSE, vprior="uninf", ...)
 desired combination of fixed effects, as a text string. Do not use "*" symbol, list
 it fully, such as: 'factor1+factor2+factor1:factor2'. 
 }
+  \item{globalFixed}{
+Vector of fixed covariates (categorical or continuous) that are expected to affect
+all genes in the sample in the same way. These would be typically related to quality 
+and/or quantity of RNA, such as RIN value.
+}
   \item{random}{
 A vector of names for gene-specific scalar random effects, such as 'c("effect1","effect2")'.
 }
   \item{globalRandom}{
-A vector of names for global scalar random effect (common to all genes), for example "plate" 
-if the experiment had genes spread over several PCR plates or a continuous "rql" 
-(RNA quality) parameter.
+Random covariates (categorical only) affecting all genes, similar to globalFixed. 
 }
   \item{data}{
 output of the cq2counts() function

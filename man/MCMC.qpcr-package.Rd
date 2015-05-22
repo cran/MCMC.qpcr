@@ -24,14 +24,14 @@ The package includes several functions for plotting the results and calculating 
 significance (HPDplot, HPDplotBygene, HPDplotBygeneBygroup).
 
 The detailed step-by-step tutorial is here:
-http://www.bio.utexas.edu/research/matz_lab/matzlab/Methods_files/mcmc.qpcr.tutorial.release1.pdf
+http://www.bio.utexas.edu/research/matz_lab/matzlab/Methods_files/mcmc.qpcr.tutorial.pdf
 }
 \details{
 \tabular{ll}{
 Package: MCMC.qpcr\cr
 Type: Package\cr
-Version: 1.1.7\cr
-Date: 2015-04-30\cr
+Version: 1.2\cr
+Date: 2015-05-22\cr
 License: GPL-3\cr
 }
 }

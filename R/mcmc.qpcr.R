@@ -1,9 +1,5 @@
-mcmc.qpcr <-
-function(fixed,random=NULL,globalRandom=NULL,data,controls=NULL,normalize=FALSE,include=NULL,m.fix=1.2,v.fix=NULL,geneSpecRes=TRUE,Covar=FALSE,vprior="uninf",...) {
-
-#data=qs;fixed="treatment.time";controls="gapdh";normalize=TRUE;include=NULL;m.fix=1.2;v.fix=NULL;genebysample=TRUE;geneSpecRes=FALSE;vprior="uninf"
-
-#data=ds;fixed="condition+timepoint+condition:timepoint";random="individual";controls=c("nd5","rpl11");normalize=TRUE;include=NULL;m.fix=1.2;v.fix=NULL;genebysample=TRUE;geneSpecRes=FALSE;vprior="uninf"
+mcmc.qpcr<-
+function(fixed=NULL,globalFixed=NULL,random=NULL,globalRandom=NULL,data,controls=NULL,normalize=FALSE,include=NULL,m.fix=1.2,v.fix=NULL,geneSpecRes=TRUE,Covar=FALSE,vprior="uninf",...) {
 
 	if (normalize) {
 		data=softNorm(data,controls)
@@ -28,15 +24,19 @@ function(fixed,random=NULL,globalRandom=NULL,data,controls=NULL,normalize=FALSE,
 	}
 
 # assembling the fixed effects formula:
+	if (!is.null(globalFixed)) {
+		gfs=paste(globalFixed,collapse="+")
+		gfs=paste(gfs,"+",sep="")
+	} else { gfs="" }
 	if (is.null(fixed)) {
-		ff="count~0+gene"
+		ff=paste("count~0+",gfs,"gene",sep="")
 	} else {
 		ff=gsub('\\s?\\+\\s?',"+gene:",x=fixed,perl=TRUE)
 		if(normalize) {
-			ff=paste("count~gene+",fixed,"+gene:",ff,sep="")
+			ff=paste("count~gene+",gfs,fixed,"+gene:",ff,sep="")
 		}
 		else {
-			ff=paste("count~0+gene+gene:",ff,sep="")
+			ff=paste("count~0+gene+",gfs,"+gene:",ff,sep="")
 		}
 	}	
 
@@ -68,6 +68,11 @@ function(fixed,random=NULL,globalRandom=NULL,data,controls=NULL,normalize=FALSE,
 	} else { Rr=list(V=1, nu=0) }
 	
 	if (is.null(controls) | normalize) {
+		if(length(globalRandom)>0){
+			for (ri in 1:length(globalRandom)) {
+				Gstruct[[paste("G",1+ri,sep="")]]=vstr.g1
+			}
+		}				
 		if(length(random)>0){
 			for (ri in 1:length(random)) {
 				Gstruct[[paste("G",1+ri,sep="")]]=vstr.gs
@@ -139,6 +144,11 @@ function(fixed,random=NULL,globalRandom=NULL,data,controls=NULL,normalize=FALSE,
 				G=Gstruct
 			)
 		} else {
+			if(length(globalRandom)>0){
+				for (ri in 1:length(globalRandom)) {
+					Gstruct[[paste("G",1+ri,sep="")]]=vstr.g1
+				}
+			}				
 			if(length(random)>0){
 				for (ri in 1:length(random)) { # not fixing variance components
 					Gstruct[[paste("G",1+ri,sep="")]]=vstr.gs

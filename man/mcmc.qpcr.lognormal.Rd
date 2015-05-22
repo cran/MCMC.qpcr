@@ -8,29 +8,36 @@ Fits a lognormal linear mixed model to qRT-PCR data.
 Use in combination with cq2log(), on datasets without too many Cq values above 30. 
 }
 \usage{
-mcmc.qpcr.lognormal(fixed, random = NULL, data, controls = NULL, 
-normalize=FALSE, include = NULL, m.fix = 1.2, v.fix = NULL, 
-geneSpecRes=TRUE,vprior = "uninf", ...)
+mcmc.qpcr.lognormal(fixed=NULL, globalFixed=NULL, random = NULL, globalRandom=NULL, data, 
+controls = NULL, normalize=FALSE, include = NULL, m.fix = 1.2, v.fix = NULL, 
+geneSpecRes=TRUE, Covar=FALSE, vprior="uninf", ...)
 }
-%- maybe also 'usage' for other objects documented here.
 \arguments{
   \item{fixed}{
 desired combination of fixed effects, as a text string. Do not use "*" symbol, list
 it fully, such as: 'factor1+factor2+factor1:factor2'. 
 }
+  \item{globalFixed}{
+Vector of fixed covariates (categorical or continuous) that are expected to affect
+all genes in the sample in the same way. These would be typically related to quality 
+and/or quantity of RNA, such as RIN value.
+}
   \item{random}{
-A vector of names for gene-specific random effects, such as 'c("effect1","effect2")'.
+A vector of names for gene-specific scalar random effects, such as 'c("effect1","effect2")'.
+}
+  \item{globalRandom}{
+Random covariates (categorical only) affecting all genes, similar to globalFixed. 
 }
   \item{data}{
-output of the cq2log() function
+output of the cq2counts() function
 }
   \item{controls}{
-Vector of control gene names. These will be pushed to the back of the gene list during model fitting,
-in the reverse order.
+Vector of control gene names. These will be pushed to the back of the gene list during
+model fitting, in the reverse order. Controls are NOT NECESSARY for the analysis.
 }
   \item{normalize}{
 If controls are specified, requiring 'normalize=TRUE' will perform "soft normalization":
-the mean of control genes will be used to infer global effects 
+the geometric mean of control genes will be used to infer global effects 
 (common to all genes) across conditions; these will be subtracted when summarizing the data
 with HPDsummary(). Use this option when template abundances are correlated with 
 conditions. Note that this is different from normalizing data within each sample, as per
@@ -43,8 +50,9 @@ will be fitted without using any of the control genes as priors. If 'include' eq
 less than the number of 'controls', 
 only the first 'include' of them will be used as priors. In all these cases, 
 the 'controls' will appear in the same order in the output, in the end of the gene list
-rather than according to their alphabetical position among other genes. This is useful when visually comparing the results
-of models fitted with different number of control genes, using HPDplot and HPDpoints functions. 
+rather than according to their alphabetical position among other genes. This is useful when 
+visually comparing the results of models fitted with different number of control genes, using 
+HPDplot and HPDpoints functions. 
 }
   \item{m.fix}{
 Allowed average fold-change of the control genes in response to any fixed factor combination.
@@ -54,14 +62,17 @@ Allowed residual fold-change deviation of the control genes. Applies to the resi
 }
   \item{geneSpecRes}{
 Whether the model should include gene-specific residuals.
-Keep it TRUE unless the model fails to converge.
+Keep it TRUE unless the model fails to converge. 
+}
+  \item{Covar}{
+Whether the random effects should be fitted with covariances. This option might require setting vprior="iw" or vprior="iw01" (see below)
 }
    \item{vprior}{
 The default prior is an uninformative inverse Wishart with assumed variance (V) at 1 
 and the degree of belief parameter (nu) at 0. With 'prior="iw"' and 'prior="iw01"' nu is equal  [number of genes]-0.998, resulting in a weakly informative prior that is commonly used in this type of inference. vprior="iw" will assume large prior variance (1), vprior="iw01" will assume small prior variance (0.1). 
 }
- \item{\dots}{
-other options for MCMCglmm function, such as nitt (number of iterations), thin (tinning interval), and burnin (number of initial iterations to disregard). For a more precise inference (but longer runs) specify 'nitt=45000, thin=20, burnin=5000'. See MCMCglmm documentation for more details.
+  \item{\dots}{
+other options for MCMCglmm function, such as nitt (number of iterations), thin (tinning interval), and burnin (number of initial iterations to disregard). For a more precise inference specify 'nitt=45000, thin=20, burnin=5000'. See MCMCglmm documentation for more details.
 }
 }
 \details{
