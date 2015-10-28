@@ -1,8 +1,13 @@
-getNormalizedData=function(model,data){
+getNormalizedData=function(model,data,controls=NULL){
 	dd=data
-	dd$pred=predict(model,type="terms",marginal=~sample)
+	if (!is.null(controls)) {
+		dd=dd[!(dd$gene %in% controls),]
+	}
+	prr=predict(model,type="terms",marginal=~sample)
+	dd$pred=prr[1:nrow(dd)]
 	predicted=c()
 	for (g in unique(dd$gene)) {
+			if (g %in% controls) { next }
 			gs=c();coo=c()
 			for(s in unique(dd$sample)) {
 				gs=append(gs,dd$pred[dd$gene==g & dd$sample==s][1]/log(2))

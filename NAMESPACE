@@ -2,3 +2,9 @@ exportPattern("^[[:alpha:]]+")
 import(coda)
 import(MCMCglmm)
 import(ggplot2)
+ importFrom("graphics", "abline", "arrows", "axis", "lines", "par",
+            "plot", "points")
+ importFrom("stats", "as.formula", "coef", "formula", "lm", "lowess",
+            "p.adjust", "pnorm", "predict", "qqnorm", "quantile",
+            "relevel", "sd", "terms")
+ importFrom("utils", "stack", "unstack")

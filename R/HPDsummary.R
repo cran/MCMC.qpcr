@@ -2,7 +2,7 @@ HPDsummary <-
 function(model,data,xgroup=NULL,genes=NA,relative=FALSE,
 log.base=2,summ.plot=TRUE,ptype="z",...) {
 	
-#model=m0;data=qs;xgroup=NULL;genes=NA;relative=FALSE;log.base=2;summ.plot=TRUE;ptype="z"
+#model=msr3;data=qs;xgroup=NULL;genes=NA;relative=FALSE;log.base=2;summ.plot=TRUE;ptype="z"
 
 	mm=model;base=log.base
 	gene.results=list()

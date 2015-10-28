@@ -8,7 +8,7 @@ Extracts qPCR model predictions
 Generates a table of model-derived log2-transformed transcript abundances without global sample effects (i.e., corresponding to efficiency-corrected and normalized qPCR data)
 }
 \usage{
-getNormalizedData(model, data)
+getNormalizedData(model, data, controls=NULL)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
@@ -17,6 +17,9 @@ qPCR model: the output of mcmc.qpcr or mcmc.qpcr.lognormal function fitted with 
 }
   \item{data}{
 The dataset that was analysed to generate the model (output of cq2counts or cq2log functions)
+}
+  \item{controls}{
+List of control genes; required if the mcmc.qpcr model was fit with the option normalize=TRUE
 }
 }
 \value{

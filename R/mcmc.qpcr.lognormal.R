@@ -75,7 +75,7 @@ function(fixed=NULL,globalFixed=NULL,random=NULL,globalRandom=NULL,data,controls
 		}				
 		if(length(random)>0){
 			for (ri in 1:length(random)) {
-				Gstruct[[paste("G",1+ri,sep="")]]=vstr.gs
+				Gstruct[[paste("G",1+ri+length(globalRandom),sep="")]]=vstr.gs
 			}
 		}
 		prior=list(  # inverse gamma, no normalizers 
@@ -133,9 +133,14 @@ function(fixed=NULL,globalFixed=NULL,random=NULL,globalRandom=NULL,data,controls
 			if (geneSpecRes) { # fixing residual variance
 				Rr=list(V=va.r, nu=0,fix=var.estimate+1)
 			}
+			if(length(globalRandom)>0){
+				for (ri in 1:length(globalRandom)) {
+					Gstruct[[paste("G",1+ri,sep="")]]=vstr.g1
+				}
+			}				
 			if(length(random)>0){
 				for (ri in 1:length(random)) {
-					Gstruct[[paste("G",1+ri,sep="")]]=vstr.gs
+					Gstruct[[paste("G",1+ri+length(globalRandom),sep="")]]=vstr.gs
 				}
 			}
 			prior=list( 
@@ -150,8 +155,8 @@ function(fixed=NULL,globalFixed=NULL,random=NULL,globalRandom=NULL,data,controls
 				}
 			}				
 			if(length(random)>0){
-				for (ri in 1:length(random)) { # not fixing variance components
-					Gstruct[[paste("G",1+ri,sep="")]]=vstr.gs
+				for (ri in 1:length(random)) {
+					Gstruct[[paste("G",1+ri+length(globalRandom),sep="")]]=vstr.gs
 				}
 			}
 			if (geneSpecRes) { 
