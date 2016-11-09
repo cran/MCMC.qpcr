@@ -8,7 +8,7 @@ function(model,factors,factors2=NULL,ylimits=NULL,hpdtype="w",inverse=F,jitter=0
 	if (inverse) inv=-1 else inv=1
 	res1=res2=c(rep(0,length(model$Sol[,1])))
 	for (f in factors){		
-		pattern=paste('^\\w+:',f,'$',sep="")
+		pattern=paste('^gene\\w+:',f,'$',sep="")
 		f1=grep(pattern,allnames)
 		res1=res1+model$Sol[,f1]
 	}

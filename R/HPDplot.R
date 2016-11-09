@@ -1,5 +1,6 @@
 HPDplot <-
-function(model,factors,factors2=NULL,ylimits=NULL,hpdtype="w",inverse=F,jitter=0,plot=T,grid=T,zero=T,...){
+function(model,factors,factors2=NULL,ylimits=NULL,hpdtype="w",inverse=FALSE,jitter=0,plot=TRUE,grid=TRUE,zero=TRUE,...){
+
 	if (inverse) inv=-1 else inv=1
 	res1=res2=c(rep(0,length(model$Sol[,1])))
 	names1=names2=c()
@@ -11,8 +12,9 @@ function(model,factors,factors2=NULL,ylimits=NULL,hpdtype="w",inverse=F,jitter=0
 	ngenes=length(genes)
 	first=1
 	for (f in factors){		
-		pattern=paste('^\\w+:',f,'$',sep="")
+		pattern=paste('^gene\\w+:',f,'$',sep="")
 		f1=grep(pattern,allnames)
+		allnames[f1]
 		res1=res1+model$Sol[,f1]
 		if (first==1) {
 			names1=allnames[f1]

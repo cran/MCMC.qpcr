@@ -10,7 +10,8 @@ fixed effects (or their combination) for all genes
 }
 \usage{
 HPDplot(model, factors, factors2 = NULL, ylimits = NULL, 
-hpdtype = "w", inverse = F, jitter = 0, plot = T, grid = T, zero = T, ...)
+hpdtype = "w", inverse = FALSE, jitter = 0, plot = TRUE, grid = TRUE, 
+zero = TRUE, ...)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{

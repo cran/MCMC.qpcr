@@ -30,8 +30,8 @@ http://www.bio.utexas.edu/research/matz_lab/matzlab/Methods_files/mcmc.qpcr.tuto
 \tabular{ll}{
 Package: MCMC.qpcr\cr
 Type: Package\cr
-Version: 1.2.1\cr
-Date: 2015-08-11\cr
+Version: 1.2.3\cr
+Date: 2016-11-07\cr
 License: GPL-3\cr
 }
 }

@@ -1,9 +1,9 @@
-6c8a5bf30295bb80df27bb93df46373c *DESCRIPTION
+813302d320758e5a171f6054e66b5473 *DESCRIPTION
 d45e3062d45b2b4a99a0e9d4d0ad3607 *NAMESPACE
-f2d296810b6bf04348cec4d62cf635c6 *R/HPDplot.R
+4b5c7849f642978c8e026719162e5b8c *R/HPDplot.R
 feacc267fd9c19bbc4f2d32b8d7aae0e *R/HPDplotBygene.R
 a2e5964b0ee98e4d440455273ecae6ab *R/HPDplotBygeneBygroup.R
-4c171b056d5dfa2769b5b8f1fc9fc8fe *R/HPDpoints.R
+43e3658458836adb467f2eb3c7e96ba2 *R/HPDpoints.R
 ca7a41473b4866437bca25bb92e0b47a *R/HPDsummary.R
 7cd3d5c87a12ce761c187cfa1e35f039 *R/PrimEff.R
 edebd94f47c773e4ba696b8d8a79b60d *R/cq2counts.R
@@ -27,12 +27,12 @@ c4ccf89a6d9ab24255aee5ccdba8ef8f *data/amp.eff.rda
 fb609d6f34d1cc20f3bc6d5a69fe838c *data/beckham.eff.rda
 9223a26f1bd2e408cbe6e96852fa5b41 *data/coral.stress.rda
 690e9b0cd3662a2ec802b4fa301ce37c *data/dilutions.rda
-2d4734ef1ee9a3398a93a90bc1be910e *man/HPDplot.Rd
+9d909389703d35f6ea64790c358c3ac2 *man/HPDplot.Rd
 f33f0afba0beb5ea46c2fb37c17e870c *man/HPDplotBygene.Rd
 7cd9889cbc6cd528e3b9116776a7bd5d *man/HPDplotBygeneBygroup.Rd
 b3aefe07c3ab62b5a685c219e5844b86 *man/HPDpoints.Rd
 2b84f21f7d989891b05827ea988ead6f *man/HPDsummary.Rd
-76ee6d14880c7b60f4539048e1ad8dbb *man/MCMC.qpcr-package.Rd
+49d25eab656776da3b30b2f6fc2d13dd *man/MCMC.qpcr-package.Rd
 7868ae3fd3977767f2530ddb96f6b7d3 *man/PrimEff.Rd
 622c37e4ab50053a35db951478326672 *man/amp.eff.Rd
 fb5c188769c358998a22b9e531aac3a0 *man/beckham.data.Rd
