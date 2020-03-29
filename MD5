@@ -1,14 +1,15 @@
-813302d320758e5a171f6054e66b5473 *DESCRIPTION
+bd2e4eb802f20bc6d29d7621e9a0ae17 *DESCRIPTION
 d45e3062d45b2b4a99a0e9d4d0ad3607 *NAMESPACE
 4b5c7849f642978c8e026719162e5b8c *R/HPDplot.R
 feacc267fd9c19bbc4f2d32b8d7aae0e *R/HPDplotBygene.R
 a2e5964b0ee98e4d440455273ecae6ab *R/HPDplotBygeneBygroup.R
 43e3658458836adb467f2eb3c7e96ba2 *R/HPDpoints.R
 ca7a41473b4866437bca25bb92e0b47a *R/HPDsummary.R
+ea279f5aad712ef2ac5f0c6b13e842ee *R/HPDsummary_cont.R
 7cd3d5c87a12ce761c187cfa1e35f039 *R/PrimEff.R
 edebd94f47c773e4ba696b8d8a79b60d *R/cq2counts.R
 5a67de89340c70da00f13cd7a9e7a790 *R/cq2genorm.R
-58f6122a1c1406c0568830e307c76c55 *R/cq2log.R
+42dbdee274c42973966095969a3735fb *R/cq2log.R
 9a3492447bc230d4b2582376f3474e6f *R/diagnostic.mcmc.R
 a099290b750826af66cba43538cad8b0 *R/getNormalizedData.R
 165420f2bbd58bd57a3e4cb53407e6d8 *R/mcmc.converge.check.R
@@ -16,8 +17,9 @@ a099290b750826af66cba43538cad8b0 *R/getNormalizedData.R
 97e6ac5861253f5ea8d032ee907bfaab *R/mcmc.qpcr.R
 395f2d2ec8de9d491ee5533696646e90 *R/mcmc.qpcr.classic.R
 81e226e496b2fe66edd58b6d2a289626 *R/mcmc.qpcr.lognormal.R
-0200f61ee3690ef267316dbb98df1e39 *R/normalize.qpcr.R
+c9b94d67ef8471ed29ffa8d81a0e78b2 *R/normalize.qpcr.R
 070de2dee50ee78fc71ee1c1e0a1d8fc *R/outlierSamples.R
+a439b35038453aba6f7f5cf1cbc9b3a3 *R/padj.hpdsummary.R
 de57d0939689abf21678794ec006d317 *R/padj.qpcr.R
 bc90d8493b32dc2d014b00bb0321a2a9 *R/softNorm.R
 8a070a07d8b7d84631e2e0c51de97d33 *R/summaryPlot.R
@@ -32,7 +34,7 @@ f33f0afba0beb5ea46c2fb37c17e870c *man/HPDplotBygene.Rd
 7cd9889cbc6cd528e3b9116776a7bd5d *man/HPDplotBygeneBygroup.Rd
 b3aefe07c3ab62b5a685c219e5844b86 *man/HPDpoints.Rd
 2b84f21f7d989891b05827ea988ead6f *man/HPDsummary.Rd
-49d25eab656776da3b30b2f6fc2d13dd *man/MCMC.qpcr-package.Rd
+4c926fd97ea83b37da0b09502511dc10 *man/MCMC.qpcr-package.Rd
 7868ae3fd3977767f2530ddb96f6b7d3 *man/PrimEff.Rd
 622c37e4ab50053a35db951478326672 *man/amp.eff.Rd
 fb5c188769c358998a22b9e531aac3a0 *man/beckham.data.Rd
@@ -40,7 +42,7 @@ ed6e6d0807fa6fe3063f19932ec06a3f *man/beckham.eff.Rd
 8555befc01268a95ce0679ee734bf359 *man/coral.stress.Rd
 8bb9a3acdf8880c80cc0e80acb3c246e *man/cq2counts.Rd
 2f492be38a8eecbd009b7543198e588e *man/cq2genorm.Rd
-d06f6c591904648247e1ad2801f2bfe6 *man/cq2log.Rd
+9d7a1b75741cd296f371418831cc2b57 *man/cq2log.Rd
 6eedae878195b9f8f829bdbb1bda7228 *man/diagnostic.mcmc.Rd
 074eca55f9ab1c2ba2d2ff8c9536b678 *man/dilutions.Rd
 4fe688135b9b9690b848c9810f4747e8 *man/getNormalizedData.Rd
@@ -51,6 +53,7 @@ f6546797baedc2b5aa3041d17c181326 *man/mcmc.qpcr.classic.Rd
 a49ffc19b1ed444275314572ea94c653 *man/mcmc.qpcr.lognormal.Rd
 379232caaeb982c02b77de3edc3230c7 *man/normalize.qpcr.Rd
 e458c422bfaacc8f5d181f10d53d0eab *man/outlierSamples.Rd
+f258f4b94112e352cb667a0040a41d4a *man/padj.hpdsummary.Rd
 ec21b03a4dab6a64da4dd55d593fb3ba *man/padj.qpcr.Rd
 43fe0023b6118eb5e64b87c4ea645228 *man/softNorm.Rd
 749c81e65871df02892986ed41b307cf *man/summaryPlot.Rd

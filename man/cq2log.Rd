@@ -8,7 +8,7 @@ Log-transforms and efficiency-corrects Cq values, converting them to natural log
 and stacks the dataset
 }
 \usage{
-cq2log(data, genecols, condcols, effic, noamp = 38)
+cq2log(data, genecols, condcols, effic, noamp = 38, stacked=TRUE)
 }
 \arguments{
   \item{data}{
@@ -37,6 +37,9 @@ amplification per PCR cycle, determined from qPCR of serial dilutions; see PrimE
   \item{noamp}{
 Value to replace instances of no amplification with. These instances would be coded by -1 in the data
 table. Specify 'noamp=NA' if you want to disregard them, but by default they will be converted into an arbitrarily low value, 38  
+}
+  \item{stacked}{
+Logical: whether to return stacked data for mcmc.qpcr modeling, or the originally-formatted table.  
 }
 }
 \details{

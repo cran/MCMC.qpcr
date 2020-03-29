@@ -73,7 +73,10 @@ naive=mcmc.qpcr(
 #summary plot of fold-changes relative to the global control
 s0=HPDsummary(model=naive,data=qs,relative=TRUE)
 
+#correcting p-values for multiple comparisons
+s0.adj=padj.hpdsummary(s0,controls=c("gapdh"))
+
 # pairwise differences and their significances for each gene:
-s0$geneWise
+s0.adj$geneWise
 
 }

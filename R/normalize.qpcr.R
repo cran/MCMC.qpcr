@@ -4,7 +4,7 @@ normalize.qpcr=function(data,controls,center=T) {
 		sub=subset(data,sample==s)
 		cm=0
 		for(g in controls) {
-			cm=cm+mean(sub[sub$gene==g,"count"])
+			cm=cm+mean(sub[sub$gene==g,"count"],na.rm=TRUE)
 		}
 		nor=round(cm/length(controls),2)
 		sub$count=sub$count-nor
@@ -13,7 +13,7 @@ normalize.qpcr=function(data,controls,center=T) {
 	# centering
 	if (center==T){
 		for(ge in levels(data$gene)){ 
-			dln[dln$gene==ge,"count"]=dln[dln$gene==ge,"count"]-round(mean(dln[dln$gene==ge,"count"]),2)
+			dln[dln$gene==ge,"count"]=dln[dln$gene==ge,"count"]-round(mean(dln[dln$gene==ge,"count"],na.rm=TRUE),2)
 		}
 	}
 	return(dln)

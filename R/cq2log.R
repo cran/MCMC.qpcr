@@ -1,5 +1,4 @@
-cq2log <-
-function(data,genecols,condcols,effic,noamp=38) {
+cq2log <-function(data,genecols,condcols,effic,noamp=38,stacked=TRUE) {
 ngenes=length(genecols)
 nfix=length(condcols)
 
@@ -19,6 +18,7 @@ for (g in genecols) {
 # stacking the dataset for modeling, to make it all have one response variable: count
 c=data.frame(round(data[,genecols],2))
 cs=data.frame(stack(c))
+cns=c
 names(cs)=c("count","gene")
 cs=cbind(cs,rep(data[,condcols]))
 for (c in c(3:(2+length(condcols)))){
@@ -26,5 +26,5 @@ for (c in c(3:(2+length(condcols)))){
 }
 nas=which(is.na(cs$count))
 if (length(nas)>0) cs=cs[-which(is.na(cs$count)),]
-return(cs)
+if (stacked==TRUE) { return(cs) } else { return(cns) }
 }
